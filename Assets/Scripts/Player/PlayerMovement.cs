@@ -17,12 +17,11 @@ public class PlayerMovement : MonoBehaviour
         Movement();
     }
 
-    
-    void Movement()
+
+    private void Movement()
     {
         if (_inputSystem.playerMovement != Vector2.zero)
         {
-            Debug.Log("Move");
         }
         
     }

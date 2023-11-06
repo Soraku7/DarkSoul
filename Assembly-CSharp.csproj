@@ -45,6 +45,7 @@
      <Compile Include="Assets\Scripts\Config\Input\CharacterInputSystem.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
      <Folder Include="Assets" />
+     <Folder Include="Assets\GameAssets" />
      <Folder Include="Assets\Scripts\Config" />
      <Folder Include="Assets\Scripts" />
      <Folder Include="Assets\Scripts\Player" />
