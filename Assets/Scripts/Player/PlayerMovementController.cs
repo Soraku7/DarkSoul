@@ -2,40 +2,51 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 public class PlayerMovementController : MonoBehaviour
 {
     private CharacterInputSystem _inputSystem;
     
-    [FormerlySerializedAs("_model")]
-    [Header("模型")]
-    [SerializeField] 
+    [SerializeField , Header("Model")] 
     private GameObject model;
     
     private float _curForward;
     private float _curRight;
     private float _velocityForward;
     private float _velocityRight;
+
+    private Vector3 _moveDirection;
     
+    [SerializeField , Header("Move")]
+    private float moveSpeed;
     
     private Animator _anim;
     private static readonly int Forward = Animator.StringToHash("forward");
 
+    private Rigidbody _rigidbody;
+    
     private void Awake()
     {
         _inputSystem = GetComponent<CharacterInputSystem>();
 
         _anim = model.GetComponent<Animator>();
+
+        _rigidbody = GetComponent<Rigidbody>();
     }
     
     private void Update()
     {
+        PlayerRotate();
+    }
+
+    private void FixedUpdate()
+    {
         Movement();
     }
 
-
-    private void Movement()
+    private void PlayerRotate()
     {
         if (_inputSystem.playerMovement != Vector2.zero)
         {
@@ -51,7 +62,15 @@ public class PlayerMovementController : MonoBehaviour
         {
             _anim.SetFloat(Forward,  .0f , 0.05f, Time.deltaTime);
         }
-        
-        
+
+        _moveDirection = model.transform.forward;
+    }
+
+    private void Movement()
+    {
+        if (_inputSystem.playerMovement != Vector2.zero)
+        {
+            _rigidbody.MovePosition(_rigidbody.position + _moveDirection * (moveSpeed * Time.deltaTime));
+        }
     }
 }
