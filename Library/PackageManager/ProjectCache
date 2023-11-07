@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638348555774375992
-    m_Hash: 3212402868
+      ticks: 638349303134676011
+    m_Hash: 190133530
   m_LockFileStatus:
     m_FilePath: D:/DarkSoul/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638348555774414837
-    m_Hash: 3963340697
+      ticks: 638349303134711377
+    m_Hash: 929196102
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -219,7 +219,7 @@ m_ResolvedPackages:
   - name: com.unity.modules.jsonserialize
     version: 1.0.0
   - name: com.unity.ide.rider
-    version: 3.0.18
+    version: 3.0.26
   - name: com.unity.ide.vscode
     version: 1.2.5
   - name: com.unity.editorcoroutines
@@ -252,12 +252,12 @@ m_ResolvedPackages:
   unityLifecycle:
     version: 1.0.1
     nextVersion: 
-- packageId: com.unity.ide.rider@3.0.18
+- packageId: com.unity.ide.rider@3.0.26
   testable: 0
   isDirectDependency: 1
-  version: 3.0.18
+  version: 3.0.26
   source: 1
-  resolvedPath: D:\DarkSoul\Library\PackageCache\com.unity.ide.rider@3.0.18
+  resolvedPath: D:\DarkSoul\Library\PackageCache\com.unity.ide.rider@3.0.26
   assetPath: Packages/com.unity.ide.rider
   name: com.unity.ide.rider
   displayName: JetBrains Rider Editor
@@ -340,13 +340,13 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 638088746970000000
+  datePublishedTicks: 638326061920000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.ide.rider@3.0/manual/index.html
   hasRepository: 1
   repository:
     type: git
     url: https://github.cds.internal.unity3d.com/unity/com.unity.ide.rider.git
-    revision: b40b39e6834c2915637f431d002d1f3dd8ec9ce5
+    revision: 2b29b1152946c13d1ecebf6fc681a59cd8b4d399
     path: 
   unityLifecycle:
     version: 3.0.18

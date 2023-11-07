@@ -43,13 +43,25 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Config\Input\InputController.cs" />
      <Compile Include="Assets\Scripts\Config\Input\CharacterInputSystem.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerMovementController.cs" />
      <Folder Include="Assets" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01\Models\YBot\Extra" />
+     <Folder Include="Assets\Animator" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01\Models\YBot" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01\Textures" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01\Models\YBot\Localmotion" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01\Models\manModel" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01\Models\YBot\Materials" />
      <Folder Include="Assets\GameAssets" />
      <Folder Include="Assets\Scripts\Config" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01\Models" />
      <Folder Include="Assets\Scripts" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01\Models\YBot\SwordAndShield" />
      <Folder Include="Assets\Scripts\Player" />
      <Folder Include="Assets\Scenes" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01\Materials" />
+     <Folder Include="Assets\GameAssets\ClassMaterials01\Models\manModel\Materials" />
      <Folder Include="Assets\Scripts\Config\Input" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Unity\2021.3.19f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

@@ -352,7 +352,7 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/Config/Input/CharacterInputSystem.cs"
 "Assets/Scripts/Config/Input/InputController.cs"
-"Assets/Scripts/Player/PlayerMovement.cs"
+"Assets/Scripts/Player/PlayerMovementController.cs"
 -langversion:9.0
 
 /deterministic
