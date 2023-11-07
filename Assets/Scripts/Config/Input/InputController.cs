@@ -39,7 +39,7 @@ public partial class @InputController: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""KeyBoardMove"",
                     ""id"": ""d3804cfe-4d20-4b86-9bfa-5c5d5b786310"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
