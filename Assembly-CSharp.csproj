@@ -44,6 +44,7 @@
      <Compile Include="Assets\Scripts\Config\Input\InputController.cs" />
      <Compile Include="Assets\Scripts\Config\Input\CharacterInputSystem.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovementController.cs" />
+     <Compile Include="Assets\Scripts\Player\IKTest.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\GameAssets\ClassMaterials01\Models\YBot\Extra" />
      <Folder Include="Assets\Animator" />
