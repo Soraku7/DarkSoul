@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterInputSystem : MonoBehaviour
 {
@@ -27,4 +28,8 @@ public class CharacterInputSystem : MonoBehaviour
         get => _inputController.PlayerInput.Movement.ReadValue<Vector2>();
     }
 
+    public bool playerRun
+    {
+        get => _inputController.PlayerInput.Run.phase == InputActionPhase.Performed;
+    }
 }

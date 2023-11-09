@@ -21,6 +21,9 @@ public class PlayerMovementController : MonoBehaviour
     
     [SerializeField , Header("Move")]
     private float moveSpeed;
+
+    [SerializeField , Header(("Run"))]
+    private float runSpeed;
     
     private Animator _anim;
     private static readonly int Forward = Animator.StringToHash("forward");
@@ -50,7 +53,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (_inputSystem.playerMovement != Vector2.zero)
         {
-            _anim.SetFloat(Forward,  1.0f , 0.05f, Time.deltaTime);
+            _anim.SetFloat(Forward, _inputSystem.playerRun? 2.0f : 1.0f, 0.05f, Time.deltaTime);
 
             _curForward = Mathf.SmoothDamp(_curForward, _inputSystem.playerMovement.y, ref _velocityForward, 0.1f);
             _curRight = Mathf.SmoothDamp(_curRight, _inputSystem.playerMovement.x, ref _velocityRight, 0.1f);
@@ -68,9 +71,8 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Movement()
     {
-        if (_inputSystem.playerMovement != Vector2.zero)
-        {
-            _rigidbody.MovePosition(_rigidbody.position + _moveDirection * (moveSpeed * Time.deltaTime));
-        }
+         if (_inputSystem.playerMovement == Vector2.zero) return;
+         var speed = _inputSystem.playerRun ? runSpeed : moveSpeed ;
+        _rigidbody.MovePosition(_rigidbody.position + _moveDirection * (speed * Time.deltaTime));
     }
 }
