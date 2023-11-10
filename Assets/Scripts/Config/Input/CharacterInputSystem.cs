@@ -32,4 +32,9 @@ public class CharacterInputSystem : MonoBehaviour
     {
         get => _inputController.PlayerInput.Run.phase == InputActionPhase.Performed;
     }
+
+    public bool playerJump
+    {
+        get => _inputController.PlayerInput.Jump.WasPressedThisFrame();
+    }
 }

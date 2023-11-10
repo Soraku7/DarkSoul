@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 151333468}
   m_Layer: 6
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -630,6 +630,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1338917090}
   moveSpeed: 2
+  runSpeed: 4
+  jumpForce: 5
+  jumpCount: 2
 --- !u!114 &1252863189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,7 +660,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &1338917090 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100138, guid: 2f9d958fbcd96e44ca35a77a15e3187a, type: 3}
