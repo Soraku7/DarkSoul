@@ -27,13 +27,12 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField, Header("Jump")] private int jumpCount;
     
     
-    private bool _isGround;
     private int _curJumpCount = 0;
     
     private Animator _anim;
     private static readonly int Forward = Animator.StringToHash("forward");
     private static readonly int Jump = Animator.StringToHash("jump");
-
+    private static readonly int IsGround = Animator.StringToHash("isGround");
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
     
@@ -69,8 +68,7 @@ public class PlayerMovementController : MonoBehaviour
             _curForward = Mathf.SmoothDamp(_curForward, _inputSystem.playerMovement.y, ref _velocityForward, 0.1f);
             _curRight = Mathf.SmoothDamp(_curRight, _inputSystem.playerMovement.x, ref _velocityRight, 0.1f);
             
-            model.transform.forward = Vector3.Slerp(model.transform.forward, transform.forward * _curForward + 
-                                                                             transform.right * _curRight, 0.3f);;
+            model.transform.forward = Vector3.Slerp(model.transform.forward, transform.forward * _curForward + transform.right * _curRight, 0.3f);;
         }
         else
         {
@@ -85,11 +83,12 @@ public class PlayerMovementController : MonoBehaviour
          if (_inputSystem.playerMovement == Vector2.zero) return;
          var speed = _inputSystem.playerRun ? runSpeed : moveSpeed ;
         _rigidbody.MovePosition(_rigidbody.position + _moveDirection * (speed * Time.deltaTime));
+        
     }
     
     private void PlayerJump()
     {
-        if (_isGround) _curJumpCount = 0;
+        if (_anim.GetBool(IsGround)) _curJumpCount = 0;
         if (_inputSystem.playerJump && _curJumpCount < jumpCount)
         {  
             //重置动画
@@ -98,7 +97,7 @@ public class PlayerMovementController : MonoBehaviour
             
             _anim.SetTrigger(Jump);
             _curJumpCount += 1;
-            _isGround = false;
+            _anim.SetBool(IsGround , false);
             _rigidbody.AddForce(Vector3.up * jumpForce , ForceMode.Impulse);
         }
     }
@@ -107,7 +106,16 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            _isGround = true;
+            _anim.SetBool(IsGround , true);
         }
     }
+    
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            _anim.SetBool(IsGround , true);
+        }
+    }
+
 }
