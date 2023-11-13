@@ -23,18 +23,11 @@ public class CharacterInputSystem : MonoBehaviour
         _inputController.Disable();
     }
     
-    public Vector2 playerMovement
-    {
-        get => _inputController.PlayerInput.Movement.ReadValue<Vector2>();
-    }
+    public Vector2 PlayerMovement => _inputController.PlayerInput.Movement.ReadValue<Vector2>();
 
-    public bool playerRun
-    {
-        get => _inputController.PlayerInput.Run.phase == InputActionPhase.Performed;
-    }
+    public bool PlayerRun => _inputController.PlayerInput.Run.phase == InputActionPhase.Performed;
 
-    public bool playerJump
-    {
-        get => _inputController.PlayerInput.Jump.WasPressedThisFrame();
-    }
+    public bool PlayerJump => _inputController.PlayerInput.Jump.WasPressedThisFrame();
+
+    public bool PlayerRoll => _inputController.PlayerInput.Roll.WasPressedThisFrame();
 }

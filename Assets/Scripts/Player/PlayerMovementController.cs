@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
+
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -25,16 +21,16 @@ public class PlayerMovementController : MonoBehaviour
 
     [SerializeField , Header("Jump")] private float jumpForce;
     [SerializeField, Header("Jump")] private int jumpCount;
+    [SerializeField, Header("Jump")] private float jabForce;
     
-    
-    private int _curJumpCount = 0;
+    private int _curJumpCount;
     
     private Animator _anim;
     private static readonly int Forward = Animator.StringToHash("forward");
     private static readonly int Jump = Animator.StringToHash("jump");
     private static readonly int IsGround = Animator.StringToHash("isGround");
+    private static readonly int Roll = Animator.StringToHash("roll");
     private Rigidbody _rigidbody;
-    private CapsuleCollider _collider;
     
     private void Awake()
     {
@@ -43,14 +39,14 @@ public class PlayerMovementController : MonoBehaviour
         _anim = model.GetComponent<Animator>();
 
         _rigidbody = GetComponent<Rigidbody>();
-
-        _collider = GetComponent<CapsuleCollider>();
+        
     }
     
     private void Update()
     {
         PlayerRotate();
         PlayerJump();
+        PlayRoll();
     }
 
     private void FixedUpdate()
@@ -61,12 +57,12 @@ public class PlayerMovementController : MonoBehaviour
 
     private void PlayerRotate()
     {
-        if (_inputSystem.playerMovement != Vector2.zero)
+        if (_inputSystem.PlayerMovement != Vector2.zero)
         {
-            _anim.SetFloat(Forward, Mathf.Lerp(_anim.GetFloat("forward") , _inputSystem.playerRun? 2.0f : 1.0f , 0.5f), 0.05f, Time.deltaTime);
+            _anim.SetFloat(Forward, Mathf.Lerp(_anim.GetFloat(Forward) , _inputSystem.PlayerRun? 2.0f : 1.0f , 0.5f), 0.05f, Time.deltaTime);
 
-            _curForward = Mathf.SmoothDamp(_curForward, _inputSystem.playerMovement.y, ref _velocityForward, 0.1f);
-            _curRight = Mathf.SmoothDamp(_curRight, _inputSystem.playerMovement.x, ref _velocityRight, 0.1f);
+            _curForward = Mathf.SmoothDamp(_curForward, _inputSystem.PlayerMovement.y, ref _velocityForward, 0.1f);
+            _curRight = Mathf.SmoothDamp(_curRight, _inputSystem.PlayerMovement.x, ref _velocityRight, 0.1f);
             
             model.transform.forward = Vector3.Slerp(model.transform.forward, transform.forward * _curForward + transform.right * _curRight, 0.3f);;
         }
@@ -80,8 +76,8 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Movement()
     {
-         if (_inputSystem.playerMovement == Vector2.zero) return;
-         var speed = _inputSystem.playerRun ? runSpeed : moveSpeed ;
+         if (_inputSystem.PlayerMovement == Vector2.zero) return;
+         var speed = _inputSystem.PlayerRun ? runSpeed : moveSpeed ;
         _rigidbody.MovePosition(_rigidbody.position + _moveDirection * (speed * Time.deltaTime));
         
     }
@@ -89,16 +85,31 @@ public class PlayerMovementController : MonoBehaviour
     private void PlayerJump()
     {
         if (_anim.GetBool(IsGround)) _curJumpCount = 0;
-        if (_inputSystem.playerJump && _curJumpCount < jumpCount)
-        {  
-            //重置动画
-            _anim.Play(Jump, -1 ,0f);
-            _anim.Update(0f);
+
+        switch (_inputSystem.PlayerJump)
+        {
+            //后跳判断 
+            case true when _anim.GetFloat(Forward) < 0.1:
+                _anim.SetTrigger(Jump);
+                break;
+            case true when _curJumpCount < jumpCount:
+                //重置动画
+                _anim.Play(Jump, -1 ,0f);
+                _anim.Update(0f);
             
-            _anim.SetTrigger(Jump);
-            _curJumpCount += 1;
-            _anim.SetBool(IsGround , false);
-            _rigidbody.AddForce(Vector3.up * jumpForce , ForceMode.Impulse);
+                _anim.SetTrigger(Jump);
+                _curJumpCount += 1;
+                _anim.SetBool(IsGround , false);
+                _rigidbody.AddForce(Vector3.up * jumpForce , ForceMode.Impulse);
+                break;
+        }
+    }
+
+    private void PlayRoll()
+    {
+        if (_rigidbody.velocity.magnitude > 5.0f || _inputSystem.PlayerRoll)
+        {
+            _anim.SetTrigger(Roll);
         }
     }
 
@@ -114,8 +125,12 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            _anim.SetBool(IsGround , true);
+            _anim.SetBool(IsGround , false);
         }
     }
 
+    private void OnJabEnter()
+    {
+        _rigidbody.AddForce(-model.transform.forward * jabForce , ForceMode.Impulse);
+    }
 }
