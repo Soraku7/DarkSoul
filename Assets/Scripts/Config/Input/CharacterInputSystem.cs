@@ -30,4 +30,7 @@ public class CharacterInputSystem : MonoBehaviour
     public bool PlayerJump => _inputController.PlayerInput.Jump.WasPressedThisFrame();
 
     public bool PlayerRoll => _inputController.PlayerInput.Roll.WasPressedThisFrame();
+
+    public Vector2 CameraLook => _inputController.PlayerInput.Look.ReadValue<Vector2>();
+
 }

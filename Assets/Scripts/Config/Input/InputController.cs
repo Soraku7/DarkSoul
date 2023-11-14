@@ -62,6 +62,15 @@ public partial class @InputController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""a4f9e3ad-d5c6-4941-a84f-ce1d925d9064"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": ""ScaleVector2"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @InputController: IInputActionCollection2, IDisposable
                     ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8336e7df-274f-42fa-8a3d-be024075cc52"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +184,7 @@ public partial class @InputController: IInputActionCollection2, IDisposable
         m_PlayerInput_Run = m_PlayerInput.FindAction("Run", throwIfNotFound: true);
         m_PlayerInput_Jump = m_PlayerInput.FindAction("Jump", throwIfNotFound: true);
         m_PlayerInput_Roll = m_PlayerInput.FindAction("Roll", throwIfNotFound: true);
+        m_PlayerInput_Look = m_PlayerInput.FindAction("Look", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +250,7 @@ public partial class @InputController: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInput_Run;
     private readonly InputAction m_PlayerInput_Jump;
     private readonly InputAction m_PlayerInput_Roll;
+    private readonly InputAction m_PlayerInput_Look;
     public struct PlayerInputActions
     {
         private @InputController m_Wrapper;
@@ -237,6 +259,7 @@ public partial class @InputController: IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_PlayerInput_Run;
         public InputAction @Jump => m_Wrapper.m_PlayerInput_Jump;
         public InputAction @Roll => m_Wrapper.m_PlayerInput_Roll;
+        public InputAction @Look => m_Wrapper.m_PlayerInput_Look;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +281,9 @@ public partial class @InputController: IInputActionCollection2, IDisposable
             @Roll.started += instance.OnRoll;
             @Roll.performed += instance.OnRoll;
             @Roll.canceled += instance.OnRoll;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
         }
 
         private void UnregisterCallbacks(IPlayerInputActions instance)
@@ -274,6 +300,9 @@ public partial class @InputController: IInputActionCollection2, IDisposable
             @Roll.started -= instance.OnRoll;
             @Roll.performed -= instance.OnRoll;
             @Roll.canceled -= instance.OnRoll;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
         }
 
         public void RemoveCallbacks(IPlayerInputActions instance)
@@ -297,5 +326,6 @@ public partial class @InputController: IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRoll(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
     }
 }

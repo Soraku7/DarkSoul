@@ -1,10 +1,12 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class PlayerMovementController : MonoBehaviour
 {
     private CharacterInputSystem _inputSystem;
-    
+    private CameraController _cameraController;
     [SerializeField , Header("Model")] 
     private GameObject model;
     
@@ -30,7 +32,16 @@ public class PlayerMovementController : MonoBehaviour
     private static readonly int IsGround = Animator.StringToHash("isGround");
     private static readonly int Roll = Animator.StringToHash("roll");
     private static readonly int JabVelocity = Animator.StringToHash("jabVelocity");
+    
     private Rigidbody _rigidbody;
+    
+    [SerializeField,Header("相机锁定点")] private Transform standCameraLook;
+    [SerializeField]private Transform crouchCameraLook;
+    private Transform _characterCamera;
+    
+    private float targetRotation;
+    private float rotationVelocity;
+    private Vector3 movementDirection;
     
     private void Awake()
     {
@@ -39,7 +50,12 @@ public class PlayerMovementController : MonoBehaviour
         _anim = model.GetComponent<Animator>();
 
         _rigidbody = GetComponent<Rigidbody>();
-        
+
+        if (Camera.main != null)
+        {
+            _characterCamera = Camera.main.transform.root;
+            _cameraController = _characterCamera.GetComponent<CameraController>();
+        }
     }
     
     private void Update()
@@ -55,6 +71,11 @@ public class PlayerMovementController : MonoBehaviour
         
     }
 
+    private void LateUpdate()
+    {
+        _cameraController.SetLookPlayerTarget(standCameraLook);
+    }
+
     private void PlayerRotate()
     {
         if (_inputSystem.PlayerMovement != Vector2.zero)
@@ -64,19 +85,29 @@ public class PlayerMovementController : MonoBehaviour
             _curForward = Mathf.SmoothDamp(_curForward, _inputSystem.PlayerMovement.y, ref _velocityForward, 0.1f);
             _curRight = Mathf.SmoothDamp(_curRight, _inputSystem.PlayerMovement.x, ref _velocityRight, 0.1f);
             
-            model.transform.forward = Vector3.Slerp(model.transform.forward, transform.forward * _curForward + transform.right * _curRight, 0.3f);;
+            targetRotation = Mathf.Atan2(_inputSystem.PlayerMovement.x, _inputSystem.PlayerMovement.y) * Mathf.Rad2Deg + _characterCamera.localEulerAngles.y;
+            
+            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, 0.3f);
+
+            var direction = Quaternion.Euler(0f, targetRotation, 0f) * Vector3.forward;
+            
+            direction = direction.normalized;
+            _moveDirection = Vector3.Slerp(model.transform.forward, direction, 0.3f);
+            //model.transform.forward = Vector3.Slerp(model.transform.forward, transform.forward * _curForward + transform.right * _curRight, 0.3f);
         }
         else
         {
             _anim.SetFloat(Forward,  .0f , 0.05f, Time.deltaTime);
+            _moveDirection = Vector3.zero;
         }
 
-        _moveDirection = model.transform.forward;
+        
     }
 
     private void Movement()
     {
          if (_inputSystem.PlayerMovement == Vector2.zero) return;
+         
          var speed = _inputSystem.PlayerRun ? runSpeed : moveSpeed ;
         _rigidbody.MovePosition(_rigidbody.position + _moveDirection * (speed * Time.deltaTime));
         
@@ -112,7 +143,9 @@ public class PlayerMovementController : MonoBehaviour
             _anim.SetTrigger(Roll);
         }
     }
-
+    
+    
+    
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Ground"))
@@ -120,17 +153,8 @@ public class PlayerMovementController : MonoBehaviour
             _anim.SetBool(IsGround , true);
         }
     }
-    
-    private void OnCollisionExit(Collision other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            _anim.SetBool(IsGround , false);
-        }
-    }
 
     #region Anim
-
     private void OnJabUpdate()
     {
         _rigidbody.velocity = model.transform.forward * _anim.GetFloat(JabVelocity);  
