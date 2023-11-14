@@ -44,6 +44,7 @@
      <Compile Include="Assets\Scripts\Player\FootIK.cs" />
      <Compile Include="Assets\Scripts\Player\Animation\FSMOnExit.cs" />
      <Compile Include="Assets\Scripts\Config\Input\InputController.cs" />
+     <Compile Include="Assets\Scripts\Player\Animation\FSMOnUpdate.cs" />
      <Compile Include="Assets\Scripts\Player\Animation\FSMClearSignal.cs" />
      <Compile Include="Assets\Scripts\Config\Input\CharacterInputSystem.cs" />
      <Compile Include="Assets\Scripts\Player\Animation\FSMOnEnter.cs" />

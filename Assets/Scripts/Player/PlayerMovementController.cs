@@ -21,8 +21,7 @@ public class PlayerMovementController : MonoBehaviour
 
     [SerializeField , Header("Jump")] private float jumpForce;
     [SerializeField, Header("Jump")] private int jumpCount;
-    [SerializeField, Header("Jump")] private float jabForce;
-    
+    [SerializeField, Header("Jump")] private int jabMultiplier;
     private int _curJumpCount;
     
     private Animator _anim;
@@ -30,6 +29,7 @@ public class PlayerMovementController : MonoBehaviour
     private static readonly int Jump = Animator.StringToHash("jump");
     private static readonly int IsGround = Animator.StringToHash("isGround");
     private static readonly int Roll = Animator.StringToHash("roll");
+    private static readonly int JabVelocity = Animator.StringToHash("jabVelocity");
     private Rigidbody _rigidbody;
     
     private void Awake()
@@ -129,8 +129,12 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-    private void OnJabEnter()
+    #region Anim
+
+    private void OnJabUpdate()
     {
-        _rigidbody.AddForce(-model.transform.forward * jabForce , ForceMode.Impulse);
+        _rigidbody.velocity = model.transform.forward * _anim.GetFloat(JabVelocity);  
     }
+    #endregion
+    
 }

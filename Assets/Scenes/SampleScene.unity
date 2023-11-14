@@ -633,7 +633,7 @@ MonoBehaviour:
   runSpeed: 4
   jumpForce: 5
   jumpCount: 2
-  jabForce: 0
+  jabMultiplier: 1
 --- !u!114 &1252863189
 MonoBehaviour:
   m_ObjectHideFlags: 0
