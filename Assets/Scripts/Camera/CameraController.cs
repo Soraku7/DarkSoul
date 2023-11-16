@@ -10,19 +10,19 @@ public class CameraController : MonoBehaviour
         private Transform _playerCamera;     
 
         
-        [Range(0.1f, 1.0f),SerializeField,Header("鼠标灵敏度")] public float mouseInputSpeed;
-        [Range(0.1f, 0.5f),SerializeField,Header("相机旋转平滑度")] public float rotationSmoothTime = 0.12f;
+        [Range(0.1f, 1.0f),SerializeField,Header("DPI")] public float mouseInputSpeed;
+        [Range(0.1f, 0.5f),SerializeField,Header("CameraRotateSmoothness")] public float rotationSmoothTime = 0.12f;
 
-        [SerializeField, Header("相机对于玩家")] private float distancePlayerOffset;
-        [SerializeField, Header("相机对于玩家")] private Vector3 offsetPlayer;
+        [SerializeField, Header("ForPlayer")] private float distancePlayerOffset;
+        [SerializeField, Header("ForPlayer")] private Vector3 offsetPlayer;
         [SerializeField] private Vector2 clmpCameraRang = new Vector2(-85f, 70f);
         [SerializeField] private float lookAtPlayerLerpTime;
 
-        [SerializeField, Header("锁敌")] private bool isLockOn;
+        [SerializeField, Header("LockEnemy")] private bool isLockOn;
         [SerializeField] private Transform currentTarget;
 
         
-        [SerializeField,Header("相机碰撞")] private Vector2 _cameraDistanceMinMax = new Vector2(0.01f, 3f);
+        [SerializeField,Header("CameraCollision")] private Vector2 _cameraDistanceMinMax = new Vector2(0.01f, 3f);
         [SerializeField] private float colliderMotionLerpTime; 
 
         private Vector3 _rotationSmoothVelocity; 

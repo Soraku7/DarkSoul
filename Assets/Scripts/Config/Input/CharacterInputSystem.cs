@@ -33,4 +33,5 @@ public class CharacterInputSystem : MonoBehaviour
 
     public Vector2 CameraLook => _inputController.PlayerInput.Look.ReadValue<Vector2>();
 
+    public bool PlayerAttack => _inputController.PlayerInput.Attack.WasPressedThisFrame();
 }

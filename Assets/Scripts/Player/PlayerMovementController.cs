@@ -32,7 +32,7 @@ public class PlayerMovementController : MonoBehaviour
     private static readonly int IsGround = Animator.StringToHash("isGround");
     private static readonly int Roll = Animator.StringToHash("roll");
     private static readonly int JabVelocity = Animator.StringToHash("jabVelocity");
-    
+    private static readonly int Attack = Animator.StringToHash("attack");
     private Rigidbody _rigidbody;
     
     [SerializeField,Header("相机锁定点")] private Transform standCameraLook;
@@ -62,7 +62,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         PlayerRotate();
         PlayerJump();
-        PlayRoll();
+        PlayerRoll();
+        PlayerAttack();
     }
 
     private void FixedUpdate()
@@ -136,14 +137,18 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-    private void PlayRoll()
+    private void PlayerRoll()
     {
         if (_rigidbody.velocity.magnitude > 5.0f || _inputSystem.PlayerRoll)
         {
             _anim.SetTrigger(Roll);
         }
     }
-    
+
+    private void PlayerAttack()
+    {
+        if(_inputSystem.PlayerAttack) _anim.SetTrigger(Attack);
+    }
     
     
     private void OnCollisionEnter(Collision other)

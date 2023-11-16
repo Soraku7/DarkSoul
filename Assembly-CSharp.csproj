@@ -45,6 +45,7 @@
      <Compile Include="Assets\Scripts\Player\Animation\FSMOnExit.cs" />
      <Compile Include="Assets\Scripts\Config\Input\InputController.cs" />
      <Compile Include="Assets\Scripts\Player\Animation\FSMOnUpdate.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
      <Compile Include="Assets\Scripts\Player\Animation\FSMClearSignal.cs" />
      <Compile Include="Assets\Scripts\Config\Input\CharacterInputSystem.cs" />
      <Compile Include="Assets\Scripts\Player\Animation\FSMOnEnter.cs" />
@@ -56,8 +57,10 @@
      <Folder Include="Assets\GameAssets\ClassMaterials01\Textures" />
      <Folder Include="Assets\GameAssets\ClassMaterials01\Models\YBot\Localmotion" />
      <Folder Include="Assets\GameAssets\ClassMaterials01\Models\manModel" />
+     <Folder Include="Assets\AvataMask" />
      <Folder Include="Assets\GameAssets\ClassMaterials01\Models\YBot\Materials" />
      <Folder Include="Assets\GameAssets" />
+     <Folder Include="Assets\Scripts\Camera" />
      <Folder Include="Assets\Scripts\Config" />
      <Folder Include="Assets\GameAssets\ClassMaterials01" />
      <Folder Include="Assets\GameAssets\ClassMaterials01\Models" />
