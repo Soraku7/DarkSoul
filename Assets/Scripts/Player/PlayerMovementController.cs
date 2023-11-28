@@ -32,6 +32,7 @@ public class PlayerMovementController : MonoBehaviour
     private static readonly int IsGround = Animator.StringToHash("isGround");
     private static readonly int Roll = Animator.StringToHash("roll");
     private static readonly int JabVelocity = Animator.StringToHash("jabVelocity");
+    private static readonly int Attack1HVelocity = Animator.StringToHash("attack1hAVelocity");
     private static readonly int Attack = Animator.StringToHash("attack");
     private Rigidbody _rigidbody;
     
@@ -163,6 +164,23 @@ public class PlayerMovementController : MonoBehaviour
     private void OnJabUpdate()
     {
         _rigidbody.velocity = model.transform.forward * _anim.GetFloat(JabVelocity);  
+    }
+
+    private void OnAttack1oneHandEnter()
+    {
+        _inputSystem.DisableInput();
+        _anim.SetLayerWeight(_anim.GetLayerIndex("Attack") , 1.0f);
+    }
+
+    private void OnAttackIdle()
+    {
+        _inputSystem.EnableInput();
+        _anim.SetLayerWeight(_anim.GetLayerIndex("Attack") , 0);
+    }
+
+    private void OnAttack1hAUpdate()
+    {
+        _rigidbody.velocity = model.transform.forward * _anim.GetFloat(Attack1HVelocity);
     }
     #endregion
     

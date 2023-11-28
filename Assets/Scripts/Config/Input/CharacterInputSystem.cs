@@ -11,16 +11,27 @@ public class CharacterInputSystem : MonoBehaviour
     {
         if (_inputController == null)
             _inputController = new InputController();
+        
     }
 
     private void OnEnable()
     {
-        _inputController.Enable();
+        EnableInput();
     }
 
     private void OnDisable()
     {
+        DisableInput();
+    }
+
+    public void DisableInput()
+    {
         _inputController.Disable();
+    }
+
+    public void EnableInput()
+    {
+        _inputController.Enable();
     }
     
     public Vector2 PlayerMovement => _inputController.PlayerInput.Movement.ReadValue<Vector2>();
@@ -34,4 +45,6 @@ public class CharacterInputSystem : MonoBehaviour
     public Vector2 CameraLook => _inputController.PlayerInput.Look.ReadValue<Vector2>();
 
     public bool PlayerAttack => _inputController.PlayerInput.Attack.WasPressedThisFrame();
+    
+    
 }
